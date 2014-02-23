@@ -36,3 +36,7 @@ request.onerror = function() {
 
 request.send();
 
+window.distance = function(start, end) {
+    // Assumes start & end are in [lat, long] format
+    return Math.sqrt(Math.pow(start[0] - end[0], 2) + Math.pow(start[1] - end[1], 2));
+};
