@@ -14,3 +14,4 @@ Useful links:
 - [MapBox API](https://www.mapbox.com/mapbox.js/api/v1.6.1/)
 - [Underscore.js](http://underscorejs.org)
 - [MomentJS](http://momentjs.com/)
+- [How to do jQuery stuff with just JS](http://youmightnotneedjquery.com/)
