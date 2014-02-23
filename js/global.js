@@ -6,11 +6,14 @@ document.addEventListener('DOMContentLoaded', function(){
     var startingLatLong = [41.888569, -87.635528];
     var startingZoom = 13;
 
+    // Initialize the map.
     var map = L.mapbox.map(mapID, mapBoxID)
-        .setView([41.888569, -87.635528], 13);
+        .setView(startingLatLong, startingZoom);
 });
 
-// Equivalent to $.getJSON
+// Get JSON data from Data Portal. (The following is instead of $.getJSON)
+// Source: https://data.cityofchicago.org/Environment-Sustainable-Development/Farmers-Markets-2013/i8y3-ytj4
+
 request = new XMLHttpRequest();
 request.open('GET', 'http://data.cityofchicago.org/resource/i8y3-ytj4.json', true);
 
@@ -28,3 +31,4 @@ request.onerror = function() {
 };
 
 request.send();
+
