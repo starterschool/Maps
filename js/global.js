@@ -17,7 +17,7 @@ request.open('GET', 'http://data.cityofchicago.org/resource/i8y3-ytj4.json', tru
 request.onload = function() {
   if (request.status >= 200 && request.status < 400){
     // Success!
-    data = JSON.parse(request.responseText);
+    var data = JSON.parse(request.responseText);
   } else {
     // We reached our target server, but it returned an error
   }
