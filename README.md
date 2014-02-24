@@ -13,7 +13,7 @@ Site for mapping out farmers markets in Chicago.
 
 ##### Data
 
-*  [Farmers Market Data on Chicago Data Portal](https://data.cityofchicago.org/Environment-Sustainable-Development/Farmers-*  Markets-2013/i8y3-ytj4)
+*  [Farmers Market Data on Chicago Data Portal](https://data.cityofchicago.org/Environment-Sustainable-Development/Farmers-Markets-2013/i8y3-ytj4)
 
 ##### Mapbox
 
