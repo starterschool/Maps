@@ -6,9 +6,26 @@ document.addEventListener('DOMContentLoaded', function(){
     var startingLatLong = [41.888569, -87.635528];
     var startingZoom = 13;
 
+    var myGeoControl = L.mapbox.geocoderControl(mapBoxID);
+    window.marketData = [];
+
     // Initialize the map.
     var map = L.mapbox.map(mapID, mapBoxID)
-        .setView(startingLatLong, startingZoom);
+        .setView(startingLatLong, startingZoom)
+        .addControl(myGeoControl);
+
+    myGeoControl.on('found', function(theResult) {
+        // console.log(theResult);
+
+        var newList = _.sortBy(marketData, function(obj, key) {
+            var distance = window.distance(theResult.latlng, [obj.latitude,obj.longitude]);
+            // console.log(theResult.latlng, [obj.latitude,obj.longitude], distance);
+            obj['distance'] = distance;
+            return distance;
+        });
+
+        console.log(newList[0]);
+    });
 
     // Get JSON data from Data Portal. (The following is instead of $.getJSON)
     // Source: https://data.cityofchicago.org/Environment-Sustainable-Development/Farmers-Markets-2013/i8y3-ytj4
@@ -18,18 +35,13 @@ document.addEventListener('DOMContentLoaded', function(){
 
     request.onload = function() {
       if (request.status >= 200 && request.status < 400){
-        // Success!
-        var data = JSON.parse(request.responseText);
+        marketData = JSON.parse(request.responseText);
 
         // Loop through the data
-            // … and update the map
+            // … and add a point for each market
 
-        for (var i = 0; i < data.length; i++) {
-            // console.log(data[i]);
-        }
-
-        _.each(data, function(element, index, list) {
-            console.log(element.latitude, element.longitude);
+        _.each(marketData, function(element, index, list) {
+            // console.log(element.latitude, element.longitude);
             // … and update the map
 
             L.mapbox.featureLayer({
@@ -67,5 +79,5 @@ document.addEventListener('DOMContentLoaded', function(){
 
 window.distance = function(start, end) {
     // Assumes start & end are in [lat, long] format
-    return Math.sqrt(Math.pow(start[0] - end[0], 2) + Math.pow(start[1] - end[1], 2));
+    return Math.sqrt(Math.pow(end[0] - start[0], 2) + Math.pow(end[1] - start[1], 2));
 };
