@@ -24,6 +24,35 @@ document.addEventListener('DOMContentLoaded', function(){
         // Loop through the data
             // … and update the map
 
+        for (var i = 0; i < data.length; i++) {
+            // console.log(data[i]);
+        }
+
+        _.each(data, function(element, index, list) {
+            console.log(element.latitude, element.longitude);
+            // … and update the map
+
+            L.mapbox.featureLayer({
+                // this feature is in the GeoJSON format: see geojson.org
+                // for the full specification
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    // coordinates here are in longitude, latitude order because
+                    // x, y is the standard for GeoJSON and many formats
+                    coordinates: [element.longitude, element.latitude]
+                },
+                properties: {
+                    title: 'A Single Marker',
+                    description: 'Just one of me',
+                    // one can customize markers by adding simplestyle properties
+                    // http://mapbox.com/developers/simplestyle/
+                    'marker-size': 'large',
+                    'marker-color': '#f0a'
+                }
+            }).addTo(map);
+        });
+
       } else {
         // We reached our target server, but it returned an error
       }
