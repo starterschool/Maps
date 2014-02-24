@@ -5,9 +5,9 @@ Site for mapping out farmers markets in Chicago.
 
 ### Set-up
 
-1. Create an account at MapBox.
-2. Create a map, note the ID.
-3. Update the value of MapBoxID with the ID of your map.
+1. Create an account on [MapBox.com](MapBox.com)
+2. Create a map on MapBox, and note the ID.
+3. Update the value of `mapBoxID` in global.js with the ID of your map.
 
 ### Useful links
 
