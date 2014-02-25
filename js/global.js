@@ -78,19 +78,17 @@ document.addEventListener('DOMContentLoaded', function(){
             // - - - - - - -
 
             _.each(marketData, function(element, index) {
-                L.mapbox.featureLayer({
-                    type: 'Feature',
-                    geometry: {
-                        type: 'Point',
-                        coordinates: [element.longitude, element.latitude]
-                    },
-                    properties: {
-                        title: 'A Single Marker',
-                        description: 'Just one of me',
-                        'marker-size': 'large',
-                        'marker-color': '#f0a'
-                    }
-                }).addTo(map);
+                var icon = new L.Icon.Default();
+                icon.options.popupAnchor = [1, -40];
+
+                var popup = new L.Popup({
+                    })
+                    .setContent("<div><b>Market</b></div>");
+
+                L.marker([element.latitude, element.longitude])
+                    .setIcon(icon)
+                    .bindPopup(popup)
+                    .addTo(map);
             });
         } else {
           // We reached our target server, but it returned an error
