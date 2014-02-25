@@ -124,7 +124,12 @@ document.addEventListener('DOMContentLoaded', function(){
                 };
             });
 
-            map.featureLayer.setGeoJSON(geoJSON);
+            var featureLayer = map.featureLayer.setGeoJSON(geoJSON);
+            var compiledTemplate = _.template("<%= intersection %>");
+
+            featureLayer.eachLayer(function (marker) {
+                marker.bindPopup(compiledTemplate({intersection: marker.feature.name}));
+            });
         } else {
           // We reached our target server, but it returned an error
         }
