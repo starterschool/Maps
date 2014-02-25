@@ -74,13 +74,18 @@ a {
   height: 100%;
 }
 
+#legend-content {
+  display: none;
+}
+
+.map-legends .map-legend {
+  padding: 0;
+}
+
 .days {
-  position: absolute;
   top: 20px;
   right: 20px;
   width: 140px;
-  background: white;
-  border-radius: 5px;
 }
 .days h2, .days a {
   padding: 6px 10px;
@@ -89,6 +94,7 @@ a {
   font-size: 11px;
   text-transform: uppercase;
   font-weight: bold;
+  margin: 0;
 }
 .days a {
   display: block;

@@ -36,10 +36,15 @@ document.addEventListener('DOMContentLoaded', function(){
     // Geocoder
     var myGeoControl = L.mapbox.geocoderControl(mapBoxID);
 
+    // Legend
+    var myLegend = L.mapbox.legendControl({position: 'topright'});
+    myLegend.addLegend(document.getElementById('legend-content').innerHTML);
+
     // Map
     var map = L.mapbox.map(mapID, mapBoxID)
         .setView(startingLatLong, startingZoom)
-        .addControl(myGeoControl);
+        .addControl(myGeoControl)
+        .addControl(myLegend);
 
     // - - - - - - -
     // HANDLE EVENT WHEN ADDRESS IS SUCCESFULLY MATCHED IN GEOCODER
@@ -122,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function(){
             map.featureLayer.setGeoJSON(geoJSON);
         } else {
           // We reached our target server, but it returned an error
-      }
+        }
     };
 
     request.onerror = function() {
