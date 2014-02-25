@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function(){
             marketData = JSON.parse(request.responseText);
 
                // - - - - - - -
-            // LOOP THROUGH DATA, OPTION 2
+            // LOOP THROUGH DATA
             // For each market, create a GeoJSON object. Collect them into an array, then add array to map at once.
             // See http://mapbox.com/developers/simplestyle/ for marker style docs
             // - - - - - - -
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function(){
             map.featureLayer.setGeoJSON(geoJSON);
         } else {
           // We reached our target server, but it returned an error
-      }
+        }
     };
 
     request.onerror = function() {
