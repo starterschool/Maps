@@ -21,12 +21,13 @@ document.addEventListener('DOMContentLoaded', function(){
     var mapBoxID = "examples.map-9ijuk24y";
     var startingLatLong = [41.888569, -87.635528];
     var startingZoom = 13;
+    var defaultMarkerColor = '#f0a';
 
     // - - - - - - -
     // WINDOW-SCOPED ARRAY FOR MARKET DATA
     // - - - - - - -
 
-    window.marketData = [];
+    window.geoJSON = [];
 
     // - - - - - - -
     // MAPBOX OBJECTS
@@ -45,16 +46,18 @@ document.addEventListener('DOMContentLoaded', function(){
     // - - - - - - -
 
     myGeoControl.on('found', function(theResult) {
-        // console.log(theResult);
-
-        var newList = _.sortBy(marketData, function(obj, key) {
-            var distance = window.distance(theResult.latlng, [obj.latitude,obj.longitude]);
-            // console.log(theResult.latlng, [obj.latitude,obj.longitude], distance);
-            obj['distance'] = distance;
+        var sortedPoints = _.sortBy(geoJSON, function(obj, key) {
+            var coords = obj.geometry.coordinates.slice().reverse(); // slice() is there to copy the object, since reverse() mutates the original object
+            var distance = window.distance(theResult.latlng, coords);
+            obj.properties['marker-color'] = defaultMarkerColor;
             return distance;
         });
 
-        console.log(newList[0]);
+        sortedPoints[0].properties['marker-color'] = '#00f';
+
+        map
+            .setView(L.latLng(theResult.latlng), startingZoom + 1)
+            .featureLayer.setGeoJSON(sortedPoints);
     });
 
     // - - - - - - -
@@ -71,25 +74,30 @@ document.addEventListener('DOMContentLoaded', function(){
         if (request.status >= 200 && request.status < 400){
             marketData = JSON.parse(request.responseText);
 
-            // - - - - - - -
-            // LOOP THROUGH DATA
-            // For each market, add a marker to the map
+               // - - - - - - -
+            // LOOP THROUGH DATA, OPTION 2
+            // For each market, create a GeoJSON object. Collect them into an array, then add array to map at once.
             // See http://mapbox.com/developers/simplestyle/ for marker style docs
             // - - - - - - -
 
-            _.each(marketData, function(element, index) {
-                var icon = new L.Icon.Default();
-                icon.options.popupAnchor = [1, -40];
-
-                var popup = new L.Popup({
-                    })
-                    .setContent("<div><b>Market</b></div>");
-
-                L.marker([element.latitude, element.longitude])
-                    .setIcon(icon)
-                    .bindPopup(popup)
-                    .addTo(map);
+            geoJSON = _.map(marketData, function(element, index) {
+                return {
+                    type: 'Feature',
+                    name: element.intersection,
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [element.longitude, element.latitude]
+                    },
+                    properties: {
+                        title: 'A Single Marker',
+                        description: 'Just one of me',
+                        'marker-size': 'large',
+                        'marker-color': defaultMarkerColor
+                    }
+                };
             });
+
+            map.featureLayer.setGeoJSON(geoJSON);
         } else {
           // We reached our target server, but it returned an error
       }
