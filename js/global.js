@@ -109,8 +109,8 @@ document.addEventListener('DOMContentLoaded', function(){
                         coordinates: [element.longitude, element.latitude]
                     },
                     properties: {
-                        title: 'A Single Marker',
-                        description: 'Just one of me',
+                        title: 'A Market',
+                        description: 'More info',
                         'marker-size': 'large',
                         'marker-color': defaultMarkerColor
                     }
