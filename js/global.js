@@ -46,6 +46,11 @@ document.addEventListener('DOMContentLoaded', function(){
     // - - - - - - -
 
     myGeoControl.on('found', function(theResult) {
+        // - - - - - - -
+        // FIRST SORT THE MARKETS BY DISTANCE
+        // And reset their colors
+        // - - - - - - -
+
         var sortedPoints = _.sortBy(geoJSON, function(obj, key) {
             var coords = obj.geometry.coordinates.slice().reverse(); // slice() is there to copy the object, since reverse() mutates the original object
             var distance = window.distance(theResult.latlng, coords);
@@ -53,11 +58,26 @@ document.addEventListener('DOMContentLoaded', function(){
             return distance;
         });
 
-        sortedPoints[0].properties['marker-color'] = '#00f';
+        // - - - - - - -
+        // THEN SET THE CLOSEST ONE TO A DIFFERENT COLOR
+        // - - - - - - -
 
-        map
+        var closestMarket = sortedPoints[0];
+        closestMarket.properties['marker-color'] = '#00f';
+
+        // - - - - - - -
+        // THEN REDEFINE THE LAYER OF MARKERS
+        // And open up the popup of the closest one
+        // - - - - - - -
+
+        var layers = map
             .setView(L.latLng(theResult.latlng), startingZoom + 1)
-            .featureLayer.setGeoJSON(sortedPoints);
+            .featureLayer.setGeoJSON(sortedPoints)
+            .eachLayer(function (marker) {
+                if (marker.feature.name == closestMarket.name) {
+                    marker.openPopup();
+                }
+            });
     });
 
     // - - - - - - -
