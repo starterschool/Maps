@@ -125,7 +125,8 @@ document.addEventListener('DOMContentLoaded', function(){
             });
 
             var featureLayer = map.featureLayer.setGeoJSON(geoJSON);
-            var compiledTemplate = _.template("<%= intersection %>");
+            var tooltipTemplate = document.getElementById('tooltip').innerHTML;
+            var compiledTemplate = _.template(tooltipTemplate);
 
             featureLayer.eachLayer(function (marker) {
                 marker.bindPopup(compiledTemplate({intersection: marker.feature.name}));
