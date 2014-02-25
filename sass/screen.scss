@@ -62,6 +62,10 @@ a {
         font-size: 14px;
         color: darken(#FE00A9,20%);
 
+        &:hover {
+            background: #f7f7f7;
+        }
+
         &.active {
             background: darken(#FE00A9,10%);
             color: white;

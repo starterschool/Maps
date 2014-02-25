@@ -95,6 +95,9 @@ a {
   font-size: 14px;
   color: #980065;
 }
+.days a:hover {
+  background: #f7f7f7;
+}
 .days a.active {
   background: #cb0087;
   color: white;
