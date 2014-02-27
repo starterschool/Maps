@@ -14,21 +14,23 @@ window.distance = function(start, end) {
     return Math.sqrt(Math.pow(end[0] - start[0], 2) + Math.pow(end[1] - start[1], 2));
 };
 
-var sunday = document.getElementById('sunday');
-sunday.addEventListener('click', function(evt) {
-    evt.preventDefault();
-    var filteredPoints = _.each(geoJSON, function(obj, key) {
-        obj.properties['marker-size'] = 'small';
-        obj.properties['marker-color'] = '#666';
-        if (obj.day.toLowerCase() == 'sunday') {
-            obj.properties['marker-size'] = 'large';
-            obj.properties['marker-color'] = defaultMarkerColor;
-        }
+var days = document.querySelectorAll('.days a');
+
+_.each(days, function(obj, key) {
+    obj.addEventListener('click', function(evt) {
+        evt.preventDefault();
+        var filteredPoints = _.each(geoJSON, function(obj, key) {
+            obj.properties['marker-size'] = 'small';
+            obj.properties['marker-color'] = '#666';
+            if (obj.day.toLowerCase() == evt.srcElement.id) {
+                obj.properties['marker-size'] = 'large';
+                obj.properties['marker-color'] = defaultMarkerColor;
+            }
+        });
+
+        map.featureLayer.setGeoJSON(filteredPoints);
     });
-
-    map.featureLayer.setGeoJSON(filteredPoints);
 });
-
 
 // - - - - - - -
 // LOAD THE FOLLOWING WHEN THE DOCUMENT IS READY
