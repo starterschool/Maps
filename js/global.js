@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     day: element.day,
                     geometry: {
                         type: 'Point',
-                        coordinates: [element.longitude, element.latitude]
+                        coordinates: [element.longitude, element.latitude] // Must be LongLat, not LatLong
                     },
                     // Properties come from SimpleStyle docs — https://www.mapbox.com/developers/simplestyle/
                     properties: {
