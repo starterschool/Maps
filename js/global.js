@@ -133,8 +133,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
             geoJSON = _.map(marketData, function(element, index) {
 
-                // LOGIC GOES HERE
-
                 var markerSize = 'small';
                 var markerColor = defaultMarkerColor;
                 var isOpenToday = false;
