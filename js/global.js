@@ -15,7 +15,8 @@ window.distance = function(start, end) {
 };
 
 var sunday = document.getElementById('sunday');
-sunday.addEventListener('click', function() {
+sunday.addEventListener('click', function(evt) {
+    evt.preventDefault();
     var filteredPoints = _.each(geoJSON, function(obj, key) {
         obj.properties['marker-size'] = 'small';
         obj.properties['marker-color'] = '#666';
