@@ -19,10 +19,17 @@ var days = document.querySelectorAll('.days a');
 _.each(days, function(obj, key) {
     obj.addEventListener('click', function(evt) {
         evt.preventDefault();
+        var currLink = evt.srcElement;
+
+        _.each(days, function(obj, key) {
+            obj.className = '';
+        });
+        currLink.className = 'active';
+
         var filteredPoints = _.each(geoJSON, function(obj, key) {
             obj.properties['marker-size'] = 'small';
             obj.properties['marker-color'] = '#666';
-            if (obj.day.toLowerCase() == evt.srcElement.id) {
+            if (obj.day.toLowerCase() == currLink.id) {
                 obj.properties['marker-size'] = 'large';
                 obj.properties['marker-color'] = defaultMarkerColor;
             }
