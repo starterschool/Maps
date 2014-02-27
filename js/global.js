@@ -106,6 +106,25 @@ document.addEventListener('DOMContentLoaded', function(){
             // - - - - - - -
 
             geoJSON = _.map(marketData, function(element, index) {
+
+                // LOGIC GOES HERE
+
+                var markerSize = 'small';
+                var markerColor = defaultMarkerColor;
+                var isOpenToday = false;
+
+                var today = moment();
+                // console.log(element.day, today.format("dddd"));
+
+                if (element.day.toLowerCase() == moment().format("dddd").toLowerCase()) {
+                    isOpenToday = true;
+                    // console.log('yes');
+                }
+
+                if (isOpenToday) {
+                    markerSize = 'large';
+                }
+
                 return {
                     type: 'Feature',
                     name: element.intersection,
@@ -117,8 +136,8 @@ document.addEventListener('DOMContentLoaded', function(){
                     properties: {
                         title: 'A Market',
                         description: 'More info',
-                        'marker-size': 'large',
-                        'marker-color': defaultMarkerColor,
+                        'marker-size': markerSize,
+                        'marker-color': markerColor,
                         'marker-symbol': 'farm'
                     }
                 };
