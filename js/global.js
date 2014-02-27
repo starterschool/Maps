@@ -143,6 +143,8 @@ document.addEventListener('DOMContentLoaded', function(){
                     markerColor = openMarkerColor;
                 }
 
+                document.getElementById(currentDayOfWeek).className = 'active';
+
                 return {
                     type: 'Feature',
                     name: element.intersection,
