@@ -16,13 +16,18 @@ window.distance = function(start, end) {
 
 var sunday = document.getElementById('sunday');
 sunday.addEventListener('click', function() {
-    map.featureLayer.eachLayer(function(layer) {
-        layer.feature.properties.marker-size = "small";
-        if (layer.feature.day.toLowerCase() == 'sunday') {
-            console.log(layer);
+    var filteredPoints = _.each(geoJSON, function(obj, key) {
+        obj.properties['marker-size'] = 'small';
+        obj.properties['marker-color'] = '#666';
+        if (obj.day.toLowerCase() == 'sunday') {
+            obj.properties['marker-size'] = 'large';
+            obj.properties['marker-color'] = defaultMarkerColor;
         }
     });
+
+    map.featureLayer.setGeoJSON(filteredPoints);
 });
+
 
 // - - - - - - -
 // LOAD THE FOLLOWING WHEN THE DOCUMENT IS READY
