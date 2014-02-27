@@ -15,8 +15,35 @@ window.distance = function(start, end) {
     return Math.sqrt(Math.pow(end[0] - start[0], 2) + Math.pow(end[1] - start[1], 2));
 };
 
-var days = document.querySelectorAll('.days a');
+// - - - - - - -
+// METHOD FOR ADDING POINTS TO MAP, THEN DEFINING POPUPS
+// - - - - - - -
 
+window.addMarketsToMap = function(marketArray, popupToOpen) {
+    map.featureLayer.setGeoJSON(marketArray);
+
+    map.featureLayer.eachLayer(function(layer) {
+        var templateBlock = document.getElementById('tooltip').innerHTML;
+        var compiledTemplate = _.template(templateBlock);
+
+        var html = compiledTemplate({
+            intersection: layer.feature.name,
+            day: layer.feature.day
+        });
+
+        layer.bindPopup(html);
+
+        if (popupToOpen && layer.feature.name == popupToOpen) {
+            layer.openPopup();
+        }
+    });
+};
+
+// - - - - - - -
+// ASSIGN CLICK HANDLER TO LINKS IN LEGEND
+// - - - - - - -
+
+var days = document.querySelectorAll('.days a');
 _.each(days, function(obj, key) {
     obj.addEventListener('click', function(evt) {
         evt.preventDefault();
@@ -36,7 +63,7 @@ _.each(days, function(obj, key) {
             }
         });
 
-        map.featureLayer.setGeoJSON(filteredPoints);
+        addMarketsToMap(filteredPoints);
     });
 });
 
@@ -44,7 +71,7 @@ _.each(days, function(obj, key) {
 // LOAD THE FOLLOWING WHEN THE DOCUMENT IS READY
 // - - - - - - -
 
-document.addEventListener('DOMContentLoaded', function(){
+document.addEventListener('DOMContentLoaded', function() {
 
     // - - - - - - -
     // MAP CONSTANTS
@@ -101,14 +128,8 @@ document.addEventListener('DOMContentLoaded', function(){
         // And open up the popup of the closest one
         // - - - - - - -
 
-        var layers = map
-            .setView(L.latLng(theResult.latlng), startingZoom + 1)
-            .featureLayer.setGeoJSON(sortedPoints)
-            .eachLayer(function (marker) {
-                if (marker.feature.name == closestMarket.name) {
-                    marker.openPopup();
-                }
-            });
+        map.setView(L.latLng(theResult.latlng), startingZoom + 1);
+        addMarketsToMap(sortedPoints, closestMarket.name);
     });
 
     // - - - - - - -
@@ -164,19 +185,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 };
             });
 
-            map.featureLayer.setGeoJSON(geoJSON);
-
-            map.featureLayer.eachLayer(function(layer) {
-                var templateBlock = document.getElementById('tooltip').innerHTML;
-                var compiledTemplate = _.template(templateBlock);
-
-                var html = compiledTemplate({
-                    intersection: layer.feature.name,
-                    day: layer.feature.day
-                });
-
-                layer.bindPopup(html);
-            });
+            addMarketsToMap(geoJSON);
         } else {
           // We reached our target server, but it returned an error
         }
