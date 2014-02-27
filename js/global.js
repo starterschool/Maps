@@ -124,12 +124,18 @@ document.addEventListener('DOMContentLoaded', function(){
                 };
             });
 
-            var featureLayer = map.featureLayer.setGeoJSON(geoJSON);
-            var tooltipTemplate = document.getElementById('tooltip').innerHTML;
-            var compiledTemplate = _.template(tooltipTemplate);
+            map.featureLayer.setGeoJSON(geoJSON);
 
-            featureLayer.eachLayer(function (marker) {
-                marker.bindPopup(compiledTemplate({intersection: marker.feature.name}));
+            map.featureLayer.eachLayer(function(layer) {
+                var templateBlock = document.getElementById('tooltip').innerHTML;
+                var compiledTemplate = _.template(templateBlock);
+
+                var html = compiledTemplate({
+                    intersection: layer.feature.name,
+                    day: layer.feature.day
+                });
+
+                layer.bindPopup(html);
             });
         } else {
           // We reached our target server, but it returned an error
