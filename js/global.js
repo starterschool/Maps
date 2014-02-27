@@ -1,4 +1,11 @@
 // - - - - - - -
+// WINDOW-SCOPED ARRAY FOR MARKET DATA
+// - - - - - - -
+
+window.geoJSON = [];
+window.defaultMarkerColor = '#f0a';
+
+// - - - - - - -
 // METHOD FOR CALCULATING AS-CROW-FLIES DISTANCE BETWEEN TWO POINTS
 // - - - - - - -
 
@@ -31,13 +38,6 @@ document.addEventListener('DOMContentLoaded', function(){
     var mapBoxID = "examples.map-9ijuk24y";
     var startingLatLong = [41.888569, -87.635528];
     var startingZoom = 12;
-    var defaultMarkerColor = '#f0a';
-
-    // - - - - - - -
-    // WINDOW-SCOPED ARRAY FOR MARKET DATA
-    // - - - - - - -
-
-    window.geoJSON = [];
 
     // - - - - - - -
     // MAPBOX OBJECTS
@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function(){
     // - - - - - - -
 
     myGeoControl.on('found', function(theResult) {
+
         // - - - - - - -
         // FIRST SORT THE MARKETS BY DISTANCE
         // And reset their colors
