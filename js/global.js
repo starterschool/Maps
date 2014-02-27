@@ -3,7 +3,8 @@
 // - - - - - - -
 
 window.geoJSON = [];
-window.defaultMarkerColor = '#f0a';
+window.defaultMarkerColor = '#666';
+window.openMarkerColor = '#f0a';
 
 // - - - - - - -
 // METHOD FOR CALCULATING AS-CROW-FLIES DISTANCE BETWEEN TWO POINTS
@@ -28,11 +29,10 @@ _.each(days, function(obj, key) {
 
         var filteredPoints = _.each(geoJSON, function(obj, key) {
             obj.properties['marker-size'] = 'small';
-            obj.properties['marker-color'] = '#666';
-            if (obj.day.toLowerCase() == currLink.id) {
+            obj.properties['marker-color'] = defaultMarkerColor;
             if (obj.day.toLowerCase() == currLink.id || currLink.id == 'all') {
                 obj.properties['marker-size'] = 'large';
-                obj.properties['marker-color'] = defaultMarkerColor;
+                obj.properties['marker-color'] = openMarkerColor;
             }
         });
 
@@ -144,11 +144,11 @@ document.addEventListener('DOMContentLoaded', function(){
 
                 if (element.day.toLowerCase() == moment().format("dddd").toLowerCase()) {
                     isOpenToday = true;
-                    // console.log('yes');
                 }
 
                 if (isOpenToday) {
                     markerSize = 'large';
+                    markerColor = openMarkerColor;
                 }
 
                 return {
