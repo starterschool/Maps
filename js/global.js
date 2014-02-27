@@ -30,6 +30,7 @@ _.each(days, function(obj, key) {
             obj.properties['marker-size'] = 'small';
             obj.properties['marker-color'] = '#666';
             if (obj.day.toLowerCase() == currLink.id) {
+            if (obj.day.toLowerCase() == currLink.id || currLink.id == 'all') {
                 obj.properties['marker-size'] = 'large';
                 obj.properties['marker-color'] = defaultMarkerColor;
             }
