@@ -135,16 +135,10 @@ document.addEventListener('DOMContentLoaded', function(){
 
                 var markerSize = 'small';
                 var markerColor = defaultMarkerColor;
-                var isOpenToday = false;
-
                 var today = moment();
-                // console.log(element.day, today.format("dddd"));
+                var currentDayOfWeek = moment().format("dddd").toLowerCase();
 
-                if (element.day.toLowerCase() == moment().format("dddd").toLowerCase()) {
-                    isOpenToday = true;
-                }
-
-                if (isOpenToday) {
+                if (element.day.toLowerCase() == currentDayOfWeek) {
                     markerSize = 'large';
                     markerColor = openMarkerColor;
                 }
