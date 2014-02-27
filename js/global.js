@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', function(){
     var myGeoControl = L.mapbox.geocoderControl(mapBoxID);
 
     // Legend
-    var myLegend = L.mapbox.legendControl({position: 'topright'});
-    myLegend.addLegend(document.getElementById('legend-content').innerHTML);
+    // var myLegend = L.mapbox.legendControl({position: 'topright'});
+    // myLegend.addLegend(document.getElementById('legend-content').innerHTML);
 
     // Map
     var map = L.mapbox.map(mapID, mapBoxID)
