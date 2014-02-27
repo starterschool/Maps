@@ -7,6 +7,16 @@ window.distance = function(start, end) {
     return Math.sqrt(Math.pow(end[0] - start[0], 2) + Math.pow(end[1] - start[1], 2));
 };
 
+var sunday = document.getElementById('sunday');
+sunday.addEventListener('click', function() {
+    map.featureLayer.eachLayer(function(layer) {
+        layer.feature.properties.marker-size = "small";
+        if (layer.feature.day.toLowerCase() == 'sunday') {
+            console.log(layer);
+        }
+    });
+});
+
 // - - - - - - -
 // LOAD THE FOLLOWING WHEN THE DOCUMENT IS READY
 // - - - - - - -
@@ -41,10 +51,9 @@ document.addEventListener('DOMContentLoaded', function(){
     // myLegend.addLegend(document.getElementById('legend-content').innerHTML);
 
     // Map
-    var map = L.mapbox.map(mapID, mapBoxID)
+    window.map = L.mapbox.map(mapID, mapBoxID)
         .setView(startingLatLong, startingZoom)
-        .addControl(myGeoControl)
-        .addControl(myLegend);
+        .addControl(myGeoControl);
 
     // - - - - - - -
     // HANDLE EVENT WHEN ADDRESS IS SUCCESFULLY MATCHED IN GEOCODER
@@ -128,6 +137,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 return {
                     type: 'Feature',
                     name: element.intersection,
+                    day: element.day,
                     geometry: {
                         type: 'Point',
                         coordinates: [element.longitude, element.latitude]
